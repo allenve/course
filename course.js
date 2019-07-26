@@ -12,11 +12,11 @@ async function login() {
     await page.waitForSelector('#username');
     await page.focus('#username');
     await page.waitFor(500);
-    await page.type('#username', 'yupeng12');
+    await page.type('#username', 'xxxx');
     await page.waitForSelector('#password');
     await page.focus('#password');
     await page.waitFor(500);
-    await page.type('#password', 'yp031507..');
+    await page.type('#password', 'xxxx');
     await page.waitFor(500);
     await page.click('#emailLogin');
     
