@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 let i = 1;
-(async () => {
+
+async function login() {
   try {
     const browser = await puppeteer.launch({
       headless: true
@@ -19,23 +20,31 @@ let i = 1;
     await page.waitFor(500);
     await page.click('#emailLogin');
     
-    await getCourse(page);
+    await getCourse(page, browser);
   } catch (e) {
     console.log('err', e);
   }
-})();
+}
 
-async function getCourse(page) {
-  i++;
-  await page.waitForSelector('.mt10');
-  const registerBtn = await page.$$('.registration');
-  if (!registerBtn.length) {
-    await page.waitFor(10000);
-    await page.reload();
-    console.log('reload', i);
-    await getCourse(page);
-  } else {
-    registerBtn[0].click();
-    console.log('success!!!!');
+async function getCourse(page, browser) {
+  try {
+    i++;
+    await page.waitForSelector('.mt10');
+    const registerBtn = await page.$$('.registration');
+    if (!registerBtn.length) {
+      await page.waitFor(3000);
+      await page.reload();
+      console.log('reload', i);
+      await getCourse(page);
+    } else {
+      registerBtn[0].click();
+      console.log('success!!!!');
+    }
+  } catch (e) {
+    await browser.close();
+    console.log("re login");
+    await login();
   }
 }
+
+login();
